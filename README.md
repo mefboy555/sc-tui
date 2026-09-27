@@ -12,6 +12,8 @@ playlists creates also in *.json files into ~/.config/scplayer/playlists/
 
 build by nuitka
 
+pkgs req: python3-dev patchelf ccache pip nuitka
+
     python3 -m nuitka \
         --standalone \
         --onefile \
