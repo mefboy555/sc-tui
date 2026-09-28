@@ -10,7 +10,11 @@ history into ~/.config/scplayer/histroy.json
 playlists creates also in *.json files into ~/.config/scplayer/playlists/
 
 
-build by nuitka
+
+
+BUILDING FROM SCRATH:
+
+
 
 pkgs req: python3-dev patchelf ccache pip nuitka
 
