@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>scplay web</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <a id="logo" href="#" title="На главную">
+    <span class="logo-icon">▶</span>
+    scplay<span class="accent">.web</span>
+  </a>
+  <div class="search">
+    <input id="q" placeholder="Трек, исполнитель или URL плейлиста…">
+    <button id="go" title="Искать">🔍</button>
+  </div>
+  <div class="user-menu">
+    <span id="username" class="username"></span>
+    <button id="btn-logout" class="btn-ghost" title="Выйти">⎋</button>
+  </div>
+</header>
+
+<main>
+  <section id="view-home" class="view active">
+    <div id="history-wrap">
+      <h2>Недавно играло</h2>
+      <ul id="history" class="tracklist"></ul>
+    </div>
+    <h2>Плейлисты</h2>
+    <div id="playlists" class="cards"></div>
+  </section>
+
+  <section id="view-results" class="view">
+    <h2 id="results-title">Результаты поиска</h2>
+    <ul id="results" class="tracklist"></ul>
+    <div class="more-wrap">
+      <button id="more" class="btn-ghost" hidden>Показать ещё ↓</button>
+    </div>
+  </section>
+
+  <section id="view-playlist" class="view">
+    <div class="playlist-head">
+      <button id="back" class="btn-ghost">← назад</button>
+      <h2 id="playlist-title"></h2>
+      <button id="play-all" class="btn-accent">▶ Играть всё</button>
+    </div>
+    <ul id="playlist-tracks" class="tracklist"></ul>
+  </section>
+</main>
+
+<footer id="playerbar">
+  <div class="pb-track">
+    <div class="pb-title" id="pb-title">Ничего не играет</div>
+    <div class="pb-artist" id="pb-artist">—</div>
+  </div>
+
+  <div class="pb-center">
+    <div class="pb-buttons">
+      <button id="btn-repeat" title="Повтор: выкл → вся очередь → один трек">🔁</button>
+      <button id="btn-prev" title="Предыдущий">⏮</button>
+      <button id="btn-play" title="Играть / пауза (пробел)">▶</button>
+      <button id="btn-next" title="Следующий">⏭</button>
+    </div>
+    <div class="pb-progress">
+      <span id="t-cur">0:00</span>
+      <input id="seek" type="range" min="0" max="0" step="0.1" value="0">
+      <span id="t-total">0:00</span>
+    </div>
+  </div>
+
+  <div class="pb-vol">
+    <button id="btn-mute" title="Тихо">🔊</button>
+    <input id="vol" type="range" min="0" max="1" step="0.01" value="1">
+  </div>
+
+  <audio id="player"></audio>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>
