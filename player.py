@@ -13,6 +13,7 @@ import tty
 from . import ui
 
 SOCKET_PATH = "/tmp/scplayer_mpv.sock"
+REPEAT_ICON = {"off": "", "all": " 🔁", "one": " 🔂"}
 
 
 class MPVController:
@@ -85,9 +86,7 @@ def play(stream_url: str, title: str, cfg,
          queue_pos: int | None = None, queue_len: int | None = None) -> str:
     """
     Проигрывает трек и обрабатывает клавиши до конца трека или выхода.
-
-    Возвращает причину остановки: 'ended' | 'quit' | 'next' | 'prev'.
-    Решение, что делать дальше (очередь, меню), принимает app.
+    Возвращает: 'ended' | 'quit' | 'next' | 'prev'
     """
     mpv = MPVController()
     step = int(cfg.get("volume_step", 5))
@@ -97,7 +96,6 @@ def play(stream_url: str, title: str, cfg,
     reason = "ended"
 
     def render() -> None:
-        """Статус-бар в одну строку: перезаписывает сам себя."""
         paused = mpv.get("pause", False)
         pos = mpv.get("time-pos")
         dur = mpv.get("duration")
@@ -108,8 +106,9 @@ def play(stream_url: str, title: str, cfg,
         vol_str = "MUTE" if muted else f"{vol:3d}%"
         filled = max(0, min(15, int(min(vol, 100) / 100 * 15)))
         bar = "█" * filled + "░" * (15 - filled)
+        rep = REPEAT_ICON.get(cfg.get("repeat", "off"), "")
 
-        line = (f"{qinfo}[{state}] {ui.fmt_time(pos)}/{ui.fmt_time(dur)} | "
+        line = (f"{qinfo}[{state}]{rep} {ui.fmt_time(pos)}/{ui.fmt_time(dur)} | "
                 f"🔊 {vol_str} [{bar}] {title[:26]}")
         sys.stdout.write("\r\033[K" + line)
         sys.stdout.flush()
@@ -144,6 +143,8 @@ def play(stream_url: str, title: str, cfg,
                         mpv.cmd("seek", seek_step)
                     elif action == "seek_back":
                         mpv.cmd("seek", -seek_step)
+                    elif action == "repeat":
+                        cfg.cycle_repeat()
                     elif action == "next_track":
                         reason = "next"
                         break
