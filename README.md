@@ -10,6 +10,7 @@ history into ~/.config/scplayer/histroy.json
 playlists creates also in *.json files into ~/.config/scplayer/playlists/
 
 
+needs: yt-dlp mpv python
 
 
 BUILDING FROM SCRATH:
